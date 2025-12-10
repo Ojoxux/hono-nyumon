@@ -1,0 +1,30 @@
+# 依存パッケージ
+node_modules/
+
+# ビルド成果物
+dist/
+
+# テスト関連
+coverage/
+.vitest/
+
+# TechTrain のテスト出力（成果物だけなので Git 管理外）
+test-outputs/
+
+# 環境変数
+.env
+.env.*
+!.env.example
+
+# ログ
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+*.log
+
+# エディタ関連
+.idea/
+
+# OSごとの不要ファイル
+.DS_Store
+Thumbs.db
