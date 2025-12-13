@@ -25,8 +25,8 @@ importers:
         specifier: ^9.39.2
         version: 9.39.2
       '@hono/eslint-config':
-        specifier: ^1.1.1
-        version: 1.1.1(@typescript-eslint/utils@8.49.0(eslint@9.39.2)(typescript@5.9.3))(eslint@9.39.2)(typescript@5.9.3)
+        specifier: ^2.0.3
+        version: 2.0.3(@typescript-eslint/utils@8.49.0(eslint@9.39.2)(typescript@5.9.3))(eslint@9.39.2)(typescript@5.9.3)
       '@types/node':
         specifier: ^22.19.2
         version: 22.19.2
@@ -679,8 +679,8 @@ packages:
     resolution: {integrity: sha512-43/qtrDUokr7LJqoF2c3+RInu/t4zfrpYdoSDfYyhg52rwLV6TnOvdG4fXm7IkSB3wErkcmJS9iEhjVtOSEjjA==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
 
-  '@hono/eslint-config@1.1.1':
-    resolution: {integrity: sha512-BMnaj+0zliH+OA4mxpY58zi1J5+zXMkpkZQlqwTSw5ZkBIPIgpOk+yRYm9poKL5PBrua3x7okTficFR1NwjLxg==}
+  '@hono/eslint-config@2.0.3':
+    resolution: {integrity: sha512-Fge00fMXIW3vzHVHV0Sgf3TaPT4wwliul7H8j04mja9fEhlErDp3iFJ6M2ndrqGxbyll5ayh1uxpEFMsr/kCGg==}
     peerDependencies:
       eslint: ^9.0.0
       typescript: ^5.0.0
@@ -2174,9 +2174,8 @@ snapshots:
       '@eslint/core': 0.17.0
       levn: 0.4.1
 
-  '@hono/eslint-config@1.1.1(@typescript-eslint/utils@8.49.0(eslint@9.39.2)(typescript@5.9.3))(eslint@9.39.2)(typescript@5.9.3)':
+  '@hono/eslint-config@2.0.3(@typescript-eslint/utils@8.49.0(eslint@9.39.2)(typescript@5.9.3))(eslint@9.39.2)(typescript@5.9.3)':
     dependencies:
-      '@eslint/eslintrc': 3.3.3
       '@eslint/js': 9.39.2
       eslint: 9.39.2
       eslint-config-prettier: 10.1.8(eslint@9.39.2)
