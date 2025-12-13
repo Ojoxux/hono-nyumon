@@ -6,7 +6,13 @@
     {
       "type": "junit-compat",
       "command": "pnpm",
-      "args": ["vitest", "run", "--reporter=junit", "--outputFile=./test-outputs/station04.xml", "./tests/station04.test.ts"],
+      "args": [
+        "vitest",
+        "run",
+        "--reporter=junit",
+        "--outputFile=./test-outputs/station04.xml",
+        "./tests/station04.test.ts"
+      ],
       "reportFile": "/test-outputs/station04.xml"
     }
   ]
