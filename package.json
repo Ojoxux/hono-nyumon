@@ -23,12 +23,12 @@
     "postgres": "^3.4.7"
   },
   "devDependencies": {
-    "@eslint/js": "^9.39.1",
+    "@eslint/js": "^9.39.2",
     "@hono/eslint-config": "^1.1.1",
     "@types/node": "^22.19.2",
     "@vitest/eslint-plugin": "^1.5.2",
     "drizzle-kit": "^0.30.6",
-    "eslint": "^9.39.1",
+    "eslint": "^9.39.2",
     "prettier": "^3.7.4",
     "tsx": "^4.21.0",
     "typescript": "^5.9.3",
