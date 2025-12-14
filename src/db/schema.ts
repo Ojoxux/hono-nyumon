@@ -11,24 +11,31 @@ export const todoLists = pgTable('todo_lists', {
   updatedAt: timestamp('updated_at', { mode: 'date' }).defaultNow(),
 })
 
-export const todoItems = pgTable('todo_items', {
-  id: serial('id').primaryKey(),
+export const todoItems = pgTable(
+  'todo_items',
+  {
+    id: serial('id').primaryKey(),
 
-  todoListId: integer('todo_list_id')
-    .notNull()
-    .references(() => todoLists.id, {
-      onDelete: 'restrict',
-      onUpdate: 'restrict',
-    }),
+    todoListId: integer('todo_list_id')
+      .notNull()
+      .references(() => todoLists.id, {
+        onDelete: 'restrict',
+        onUpdate: 'restrict',
+      }),
 
-  title: varchar('title', { length: 50 }).notNull(),
-  description: varchar('description', { length: 200 }),
-  statusCode: integer('status_code'),
-  dueAt: timestamp('due_at', { mode: 'date' }),
+    title: varchar('title', { length: 50 }).notNull(),
+    description: varchar('description', { length: 200 }),
+    statusCode: integer('status_code'),
+    dueAt: timestamp('due_at', { mode: 'date' }),
 
-  createdAt: timestamp('created_at', { mode: 'date' }).defaultNow(),
-  updatedAt: timestamp('updated_at', { mode: 'date' }).defaultNow(),
-})
+    createdAt: timestamp('created_at', { mode: 'date' }).defaultNow(),
+    updatedAt: timestamp('updated_at', { mode: 'date' }).defaultNow(),
+  },
+  (t) => [
+    index('todo_items_todo_list_id_idx').on(t.todoListId),
+    index('todo_items_todo_list_id_id_idx').on(t.todoListId, t.id),
+  ]
+)
 
 export const todoListsRelations = relations(todoLists, ({ many }) => ({
   items: many(todoItems),
