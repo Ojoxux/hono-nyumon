@@ -27,6 +27,7 @@
     "@hono/eslint-config": "^2.0.3",
     "@types/node": "^24.10.3",
     "@vitest/eslint-plugin": "^1.5.2",
+    "dotenv": "^17.2.3",
     "drizzle-kit": "^0.31.8",
     "eslint": "^9.39.2",
     "prettier": "^3.7.4",
