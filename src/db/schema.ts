@@ -8,7 +8,9 @@ export const todoLists = pgTable('todo_lists', {
   description: varchar('description', { length: 200 }),
 
   createdAt: timestamp('created_at', { mode: 'date' }).defaultNow(),
-  updatedAt: timestamp('updated_at', { mode: 'date' }).defaultNow(),
+  updatedAt: timestamp('updated_at', { mode: 'date' })
+    .defaultNow()
+    .$onUpdateFn(() => new Date()),
 })
 
 export const todoItems = pgTable(
@@ -29,7 +31,9 @@ export const todoItems = pgTable(
     dueAt: timestamp('due_at', { mode: 'date' }),
 
     createdAt: timestamp('created_at', { mode: 'date' }).defaultNow(),
-    updatedAt: timestamp('updated_at', { mode: 'date' }).defaultNow(),
+    updatedAt: timestamp('updated_at', { mode: 'date' })
+      .defaultNow()
+      .$onUpdateFn(() => new Date()),
   },
   (t) => [
     index('todo_items_todo_list_id_idx').on(t.todoListId),
