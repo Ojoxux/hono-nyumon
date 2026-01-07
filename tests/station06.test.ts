@@ -5,7 +5,7 @@ import { sql } from 'drizzle-orm'
 type TableRow = { table_name: string }
 
 describe('Station 06 - TODO アプリの作成を始めよう', () => {
-  it('todo_lists / todo_items が存在する', async () => {
+  it('Database should have todo_lists and todo_items tables', async () => {
     // public スキーマの通常テーブル一覧を取得
     const rows = await db.execute<TableRow>(sql`
       select table_name
