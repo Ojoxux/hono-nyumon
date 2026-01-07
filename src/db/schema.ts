@@ -7,8 +7,9 @@ export const todoLists = pgTable('todo_lists', {
   title: varchar('title', { length: 50 }).notNull(),
   description: varchar('description', { length: 200 }),
 
-  createdAt: timestamp('created_at', { mode: 'date' }).defaultNow(),
+  createdAt: timestamp('created_at', { mode: 'date' }).notNull().defaultNow(),
   updatedAt: timestamp('updated_at', { mode: 'date' })
+    .notNull()
     .defaultNow()
     .$onUpdateFn(() => new Date()),
 })
@@ -27,11 +28,12 @@ export const todoItems = pgTable(
 
     title: varchar('title', { length: 50 }).notNull(),
     description: varchar('description', { length: 200 }),
-    statusCode: integer('status_code'),
+    statusCode: integer('status_code').notNull().default(1), // 1. NOT_COMPLETED, 2. COMPLETED
     dueAt: timestamp('due_at', { mode: 'date' }),
 
-    createdAt: timestamp('created_at', { mode: 'date' }).defaultNow(),
+    createdAt: timestamp('created_at', { mode: 'date' }).notNull().defaultNow(),
     updatedAt: timestamp('updated_at', { mode: 'date' })
+      .notNull()
       .defaultNow()
       .$onUpdateFn(() => new Date()),
   },
