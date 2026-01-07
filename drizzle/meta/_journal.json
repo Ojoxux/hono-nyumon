@@ -8,6 +8,13 @@
       "when": 1767755342380,
       "tag": "0000_steep_magdalene",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1767779684921,
+      "tag": "0001_bouncy_ghost_rider",
+      "breakpoints": true
     }
   ]
 }
