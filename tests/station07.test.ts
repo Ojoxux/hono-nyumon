@@ -14,8 +14,8 @@ describe('Station 07 - TODO リスト取得 API を作成しよう', () => {
       id: 1,
       title: '最初のTodoリスト',
       description: '最初のTodoリストです',
-      createdAt: expect.any(String),
-      updatedAt: expect.any(String),
+      created_at: expect.any(String),
+      updated_at: expect.any(String),
     })
   })
 })
