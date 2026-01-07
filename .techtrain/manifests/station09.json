@@ -1,6 +1,6 @@
 {
-  "name": "Station 05",
-  "id": 5,
+  "name": "Station 09",
+  "id": 9,
   "prepare": [],
   "tests": [
     {
@@ -10,10 +10,10 @@
         "vitest",
         "run",
         "--reporter=junit",
-        "--outputFile=./test-outputs/station05.xml",
-        "./tests/station05.test.ts"
+        "--outputFile=./test-outputs/station09.xml",
+        "./tests/station09.test.ts"
       ],
-      "reportFile": "/test-outputs/station05.xml"
+      "reportFile": "/test-outputs/station09.xml"
     }
   ]
 }
