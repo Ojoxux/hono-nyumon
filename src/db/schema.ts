@@ -22,7 +22,7 @@ export const todoItems = pgTable(
     todoListId: integer('todo_list_id')
       .notNull()
       .references(() => todoLists.id, {
-        onDelete: 'restrict',
+        onDelete: 'cascade',
         onUpdate: 'restrict',
       }),
 
