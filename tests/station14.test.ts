@@ -41,7 +41,9 @@ describe('Station 14 - TODO 項目削除 API を作成しよう', () => {
         method: 'DELETE',
       })
 
-      expect(res.status).toBe(204)
+      expect(res.status).toBe(200)
+      const body = await res.json()
+      expect(body).toEqual({})
 
       // 4) DB から消えていること
       const rows = await db.select().from(todoItems).where(eq(todoItems.id, itemId))

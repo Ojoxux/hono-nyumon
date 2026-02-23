@@ -29,7 +29,9 @@ describe('Station 10 - TODO リスト削除 API を作成しよう', () => {
         method: 'DELETE',
       })
 
-      expect(res.status).toBe(204)
+      expect(res.status).toBe(200)
+      const body = await res.json()
+      expect(body).toEqual({})
 
       // 3. 削除されていることを確認
       const rows = await db.select().from(todoLists).where(eq(todoLists.id, listId))
