@@ -41,7 +41,7 @@ describe('Station 13 - TODO 項目更新 API を作成しよう', () => {
       title: 'after title',
       description: 'after description',
       due_at: '2026-01-10T06:30:13.196Z',
-      status_code: 2,
+      complete: true,
     }
 
     try {
@@ -64,7 +64,7 @@ describe('Station 13 - TODO 項目更新 API を作成しよう', () => {
         todo_list_id: listId,
         title: updateBody.title,
         description: updateBody.description,
-        status_code: updateBody.status_code,
+        status_code: 2,
         due_at: updateBody.due_at,
         created_at: expect.any(String),
         updated_at: expect.any(String),
@@ -76,10 +76,57 @@ describe('Station 13 - TODO 項目更新 API を作成しよう', () => {
       expect(rows[0].todoListId).toBe(listId)
       expect(rows[0].title).toBe(updateBody.title)
       expect(rows[0].description ?? '').toBe(updateBody.description)
-      expect(rows[0].statusCode).toBe(updateBody.status_code)
+      expect(rows[0].statusCode).toBe(2)
       expect(rows[0].dueAt?.toISOString()).toBe(updateBody.due_at)
     } finally {
       // list 削除で item も cascade delete
+      await db.delete(todoLists).where(eq(todoLists.id, listId))
+    }
+  })
+
+  it('PUT /lists/:listId/items/:itemId should map complete=false to status_code=1', async () => {
+    const [list] = await db
+      .insert(todoLists)
+      .values({
+        title: 'テスト用Todoリスト（Station13 complete=false）',
+        description: 'Station13 complete=false のテスト用リスト',
+      })
+      .returning({ id: todoLists.id })
+
+    const listId = list.id
+
+    const [item] = await db
+      .insert(todoItems)
+      .values({
+        todoListId: listId,
+        title: 'before title',
+        description: 'before description',
+        statusCode: 2,
+        dueAt: new Date('2026-01-01T00:00:00.000Z'),
+      })
+      .returning({ id: todoItems.id })
+
+    const itemId = item.id
+
+    try {
+      const res = await app.request(`/lists/${listId}/items/${itemId}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ complete: false }),
+      })
+
+      expect(res.status).toBe(200)
+
+      const body = (await res.json()) as {
+        status_code: number
+      }
+
+      expect(body.status_code).toBe(1)
+
+      const rows = await db.select().from(todoItems).where(eq(todoItems.id, itemId))
+      expect(rows).toHaveLength(1)
+      expect(rows[0].statusCode).toBe(1)
+    } finally {
       await db.delete(todoLists).where(eq(todoLists.id, listId))
     }
   })
