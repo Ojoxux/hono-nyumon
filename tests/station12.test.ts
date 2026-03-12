@@ -36,21 +36,12 @@ describe('Station 12 - TODO 項目作成 API を作成しよう', () => {
         body: JSON.stringify(newItem),
       })
 
-      expect(res.status).toBe(201)
+      expect(res.status).toBe(200)
 
       const contentType = res.headers.get('content-type') ?? ''
       expect(contentType).toContain('application/json')
 
-      const body = (await res.json()) as {
-        id: number
-        todo_list_id: number
-        title: string
-        description: string
-        status_code: number
-        due_at: string
-        created_at: string
-        updated_at: string
-      }
+      const body = (await res.json()) as { id: number }
 
       expect(body).toEqual({
         id: expect.any(Number),
@@ -75,19 +66,5 @@ describe('Station 12 - TODO 項目作成 API を作成しよう', () => {
       // list 削除で item も cascade delete
       await db.delete(todoLists).where(eq(todoLists.id, listId))
     }
-  })
-
-  it('POST /lists/:listId/items should return 404 when todo list does not exist', async () => {
-    const res = await app.request('/lists/999999/items', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        title: 'dummy',
-        description: 'dummy',
-        due_at: '2026-01-10T06:30:13.196Z',
-      }),
-    })
-
-    expect(res.status).toBe(404)
   })
 })

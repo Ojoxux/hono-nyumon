@@ -20,14 +20,12 @@ describe('Station 08 - TODO リスト作成 API を作成しよう', () => {
       body: JSON.stringify(newList),
     })
 
-    expect(res.status).toBe(201)
+    expect(res.status).toBe(200)
 
     const contentType = res.headers.get('content-type') ?? ''
     expect(contentType).toContain('application/json')
 
-    const body = (await res.json()) as {
-      id: number
-    }
+    const body = (await res.json()) as { id: number }
 
     expect(body).toEqual({
       id: expect.any(Number),

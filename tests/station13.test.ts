@@ -10,7 +10,7 @@ describe('Station 13 - TODO 項目更新 API を作成しよう', () => {
     await client.end()
   })
 
-  it('PUT /lists/:listId/items/:itemId should update an existing todo item', async () => {
+  it('PATCH /lists/:listId/items/:itemId should update an existing todo item', async () => {
     // 1) list 作成
     const [list] = await db
       .insert(todoLists)
@@ -47,7 +47,7 @@ describe('Station 13 - TODO 項目更新 API を作成しよう', () => {
     try {
       // 3) 更新 API
       const res = await app.request(`/lists/${listId}/items/${itemId}`, {
-        method: 'PUT',
+        method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(updateBody),
       })
@@ -84,7 +84,7 @@ describe('Station 13 - TODO 項目更新 API を作成しよう', () => {
     }
   })
 
-  it('PUT /lists/:listId/items/:itemId should map complete=false to status_code=1', async () => {
+  it('PATCH /lists/:listId/items/:itemId should map complete=false to status_code=1', async () => {
     const [list] = await db
       .insert(todoLists)
       .values({
@@ -110,7 +110,7 @@ describe('Station 13 - TODO 項目更新 API を作成しよう', () => {
 
     try {
       const res = await app.request(`/lists/${listId}/items/${itemId}`, {
-        method: 'PUT',
+        method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ complete: false }),
       })
@@ -131,7 +131,7 @@ describe('Station 13 - TODO 項目更新 API を作成しよう', () => {
     }
   })
 
-  it('PUT /lists/:listId/items/:itemId should return 404 when item is not in the list', async () => {
+  it('PATCH /lists/:listId/items/:itemId should return 404 when item is not in the list', async () => {
     // list を2つ作る
     const [listA] = await db
       .insert(todoLists)
@@ -160,7 +160,7 @@ describe('Station 13 - TODO 項目更新 API を作成しよう', () => {
 
     try {
       const res = await app.request(`/lists/${listIdB}/items/${itemId}`, {
-        method: 'PUT',
+        method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ title: 'should not update' }),
       })

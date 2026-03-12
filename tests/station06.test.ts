@@ -1,4 +1,4 @@
-import { describe, it, expect } from 'vitest'
+import { describe, it, expect, afterAll } from 'vitest'
 import { client, db } from '../src/db/client.js'
 import { sql, inArray } from 'drizzle-orm'
 import { todoItems, todoLists } from '../src/db/schema.js'
