@@ -1,0 +1,19 @@
+{
+  "name": "Station 15",
+  "id": 15,
+  "prepare": [],
+  "tests": [
+    {
+      "type": "junit-compat",
+      "command": "pnpm",
+      "args": [
+        "vitest",
+        "run",
+        "--reporter=junit",
+        "--outputFile=./test-outputs/station15.xml",
+        "./tests/station15.test.ts"
+      ],
+      "reportFile": "/test-outputs/station15.xml"
+    }
+  ]
+}
