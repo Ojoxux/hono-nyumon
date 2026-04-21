@@ -28,3 +28,4 @@ pnpm-debug.log*
 # OSごとの不要ファイル
 .DS_Store
 Thumbs.db
+.techtrain/config.toml
