@@ -1,6 +1,6 @@
 import { Hono } from 'hono'
 import { db } from '../db/client.js'
-import { todoLists } from '../db/schema.js'
+import { todoLists, todoItems } from '../db/schema.js'
 import { PgColumn } from 'drizzle-orm/pg-core'
 import { eq } from 'drizzle-orm'
 
@@ -14,6 +14,12 @@ type NewTodoList = {
 type UpdateTodoList = {
   title?: string
   description?: string
+}
+
+type NewTodoItem = {
+  title: string
+  description: string
+  due_at: string
 }
 
 helloRoute.get('/hello', (c) => {
@@ -152,9 +158,36 @@ helloRoute.get('/lists/:listId/items/:itemId', async (c) => {
   })
 })
 
-helloRoute.post('/lists/:listId/items/:itemId', async (c) => {
+helloRoute.post('/lists/:listId/items', async (c) => {
   const listId = Number(c.req.param('listId'))
-  const itemId = Number(c.req.param('itemId'))
+
+  const { title, description, due_at } = await c.req.json<NewTodoItem>()
+  const dueAt = new Date(due_at)
+
+  const insertedRows = await db
+    .insert(todoItems)
+    .values({ todoListId: listId, title, description, dueAt })
+    .returning()
+
+  if (insertedRows.length !== 1) {
+    return c.json({ error: 'Failed to create todo item' }, 500)
+  }
+
+  const inserted = insertedRows[0]
+
+  return c.json(
+    {
+      id: inserted.id,
+      todo_list_id: inserted.todoListId,
+      title: inserted.title,
+      description: inserted.description ?? '',
+      status_code: inserted.statusCode,
+      due_at: inserted.dueAt,
+      created_at: inserted.createdAt,
+      updated_at: inserted.updatedAt,
+    },
+    200
+  )
 })
 
 export default helloRoute
