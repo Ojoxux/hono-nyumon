@@ -6,6 +6,16 @@ import { eq } from 'drizzle-orm'
 
 const helloRoute = new Hono()
 
+type NewTodoList = {
+  title: string
+  description: string
+}
+
+type UpdateTodoList = {
+  title?: string
+  description?: string
+}
+
 helloRoute.get('/hello', (c) => {
   return c.json({ Message: 'Hello Hono!' })
 })
@@ -46,11 +56,6 @@ helloRoute.get('/lists/:listId', async (c) => {
   })
 })
 
-type NewTodoList = {
-  title: string
-  description: string
-}
-
 helloRoute.post('/lists', async (c) => {
   // リクエストコンテキストから欲しい情報をとる
   // この場合だと、titleとdescription
@@ -74,11 +79,6 @@ helloRoute.post('/lists', async (c) => {
     updated_at: inserted.updatedAt,
   })
 })
-
-type UpdateTodoList = {
-  title?: string
-  description?: string
-}
 
 helloRoute.patch('/lists/:listId', async (c) => {
   const listId = Number(c.req.param('listId'))
@@ -150,6 +150,11 @@ helloRoute.get('/lists/:listId/items/:itemId', async (c) => {
     created_at: todoItem.createdAt,
     updated_at: todoItem.updatedAt,
   })
+})
+
+helloRoute.post('/lists/:listId/items/:itemId', async (c) => {
+  const listId = Number(c.req.param('listId'))
+  const itemId = Number(c.req.param('itemId'))
 })
 
 export default helloRoute
