@@ -44,4 +44,33 @@ helloRoute.get('/lists/:listId', async (c) => {
   })
 })
 
+type NewTodoList = {
+  title: string
+  description: string
+}
+
+helloRoute.post('/lists', async (c) => {
+  // リクエストコンテキストから欲しい情報をとる
+  // この場合だと、titleとdescription
+  const { title, description } = await c.req.json<NewTodoList>()
+
+  // insertAPIでデータを1件登録する
+  // INSERT INTO todoLists (title, description) VALUES ("aaa": title, "bbb": description);
+  const insertedRows = await db.insert(todoLists).values({ title, description }).returning()
+
+  // 1件だけ登録する想定なので、配列の長さが1であることを見る
+  if (insertedRows.length !== 1) {
+    return c.json({ error: 'Failed to create todo list' }, 500)
+  }
+  const inserted = insertedRows[0]
+
+  return c.json({
+    id: inserted.id,
+    title: inserted.title,
+    description: inserted.description,
+    created_at: inserted.createdAt,
+    updated_at: inserted.updatedAt,
+  })
+})
+
 export default helloRoute
