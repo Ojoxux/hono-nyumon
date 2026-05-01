@@ -1,6 +1,8 @@
 import { Hono } from 'hono'
 import { db } from '../db/client.js'
 import { todoLists } from '../db/schema.js'
+import { PgColumn } from 'drizzle-orm/pg-core'
+import { eq } from 'drizzle-orm'
 
 const helloRoute = new Hono()
 
@@ -70,6 +72,42 @@ helloRoute.post('/lists', async (c) => {
     description: inserted.description,
     created_at: inserted.createdAt,
     updated_at: inserted.updatedAt,
+  })
+})
+
+type UpdateTodoList = {
+  title?: string
+  description?: string
+}
+
+helloRoute.patch('/lists/:listId', async (c) => {
+  const listId = Number(c.req.param('listId'))
+  const { title, description } = await c.req.json<UpdateTodoList>()
+
+  // SQLで書くと
+  // UPDATE todoLists SET title = $title, description = $description where id = $1
+  const updatedRows = await db
+    .update(todoLists)
+    .set({ title, description })
+    .where(eq(todoLists.id, listId))
+    .returning()
+
+  if (updatedRows.length === 0) {
+    return c.json({ error: 'Todo list not found' }, 500)
+  }
+
+  if (updatedRows.length !== 1) {
+    return c.json({ error: 'Failed to update todo list' }, 500)
+  }
+
+  const updated = updatedRows[0]
+
+  return c.json({
+    id: updated.id,
+    title: updated.title,
+    description: updated.description,
+    created_at: updated.createdAt,
+    updated_at: updated.updatedAt,
   })
 })
 
